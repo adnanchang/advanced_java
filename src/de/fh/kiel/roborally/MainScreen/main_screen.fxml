@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fh.kiel.roborally.MainScreen.Controller">
+   <top>
+      <Text fill="RED" stroke="#ebe00f" strokeType="OUTSIDE" strokeWidth="1.75" text="Robo Rally" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Gameplay Regular" size="60.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
+      </Text>
+   </top>
+   <left>
+      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="216.0" spacing="25.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text fx:id="txtCreateGame" fill="#ee0000" onMouseClicked="#createGameMouseClick" onMouseEntered="#createGameMouseEnter" onMouseExited="#createGameMouseExit" stroke="#e8dc0b" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Game" textOrigin="TOP">
+               <font>
+                  <Font name="Gameplay Regular" size="40.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtJoinGame" fill="#ee0000" onMouseClicked="#joinGameMouseClick" onMouseEntered="#joinGameMouseEnter" onMouseExited="#joinGameMouseExit" stroke="#e8dc0b" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Game" textOrigin="TOP">
+               <font>
+                  <Font name="Gameplay Regular" size="40.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtExit" fill="#ee0000" onMouseClicked="#exitMouseClick" onMouseEntered="#exitMouseEnter" onMouseExited="#exitMouseExit" stroke="#e8dc0b" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit" textOrigin="TOP">
+               <font>
+                  <Font name="Gameplay Regular" size="40.0" />
+               </font>
+            </Text>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
