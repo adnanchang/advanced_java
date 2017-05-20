@@ -45,8 +45,17 @@ public class CreateGame implements Initializable {
     }
 
     @FXML private void createGameMouseClick() throws IOException {
-        sendJSONData();
-        sendJSONDataGameDetail();
+        String gameName = txtFName.getText().substring(0,1).toUpperCase() + txtFName.getText().substring(1);
+        byte[] out = (String.format(
+                "{" +
+                        "\"name\" : \"%s\"," +
+                        "\"maxRobotCount\" : \"%d\"" +
+                        "}", gameName, comboMaxRobots.getValue())).getBytes(StandardCharsets.UTF_8);
+
+        /**
+         * Post Byte array to create a game
+         */
+        Main.postJSON(out, "/games/create");
         changeScene("PreGame","pre_game.fxml");
     }
 
@@ -68,114 +77,6 @@ public class CreateGame implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         comboMaxRobots.getItems().removeAll(comboMaxRobots.getItems());
         comboMaxRobots.getItems().addAll(1,2,3,4,5,6);
-    }
-
-    private void sendJSONData() {
-        URL url = null;
-        try {
-            url = new URL("http://localhost:8080/games/create");
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-        }
-        URLConnection con = null;
-        try {
-            con = url.openConnection();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        HttpURLConnection http = (HttpURLConnection)con;
-        try {
-            http.setRequestMethod("POST"); // PUT is another valid option
-        } catch (ProtocolException e1) {
-            e1.printStackTrace();
-        }
-        http.setDoOutput(true);
-        String gameName = txtFName.getText().substring(0,1).toUpperCase() + txtFName.getText().substring(1);
-        byte[] out = (String.format(
-                "{" +
-                        "\"name\" : \"%s\"," +
-                        "\"maxRobotCount\" : \"%d\"" +
-                "}", gameName, comboMaxRobots.getValue())).getBytes(StandardCharsets.UTF_8);
-
-        int length = out.length;
-
-        http.setFixedLengthStreamingMode(length);
-        http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        try {
-            http.connect();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        try(OutputStream os = http.getOutputStream()) {
-            os.write(out);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        try {
-            InputStream inputStream = http.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line+"\n");
-            }
-            bufferedReader.close();
-            String stringOfGames = stringBuilder.toString();
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            Gson gson = gsonBuilder.setPrettyPrinting().create();
-            Main.game = gson.fromJson(stringOfGames, Games.class);
-//            String jsonOutput = gson.toJson(Main.game);
-//            System.out.println(jsonOutput);
-//            System.out.println(Main.game.getId());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void sendJSONDataGameDetail(){
-        Main.gameDetails = new GameDetails(txtPlayerName.getText(), "", "PUT URL HERE", Main.game);
-//        List<GameDetails> gameDetailsList = Main.game.getGameDetails();
-//        gameDetailsList.add(gameDetails);
-//        Main.game.setGameDetails(gameDetailsList);
-        URL url = null;
-        try {
-            url = new URL("http://localhost:8080/gamedetails/create");
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-        }
-        URLConnection con = null;
-        try {
-            con = url.openConnection();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        HttpURLConnection http = (HttpURLConnection)con;
-        try {
-            http.setRequestMethod("POST"); // PUT is another valid option
-        } catch (ProtocolException e1) {
-            e1.printStackTrace();
-        }
-        http.setDoOutput(true);
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.setPrettyPrinting().create();
-        String jsonOutput = gson.toJson(Main.gameDetails);
-        byte[] out = jsonOutput.getBytes(StandardCharsets.UTF_8);
-        int length = out.length;
-
-        http.setFixedLengthStreamingMode(length); // THIS IS IMPORTANT. DOESN'T WORK WITHOUT THIS
-        http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        try {
-            http.connect();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        try(OutputStream os = http.getOutputStream()) {
-            os.write(out);
-            System.out.println(jsonOutput);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
     }
 
     private void changeScene(String path, String FXMLFile ) throws IOException {

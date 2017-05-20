@@ -62,58 +62,11 @@ public class PreGame implements Initializable {
     }
 
     @FXML private void backMouseClick() throws IOException {
-        URL url = null;
-        try {
-            url = new URL("http://localhost:8080/gamedetails/game/" + Main.game.getId());
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-        }
-        URLConnection con = null;
-        try {
-            con = url.openConnection();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        HttpURLConnection http = (HttpURLConnection)con;
-        try {
-            http.setRequestMethod("PUT"); // PUT is another valid option
-        } catch (ProtocolException e1) {
-            e1.printStackTrace();
-        }
-        http.setDoOutput(true);
-
-        http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        try {
-            http.connect();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        try {
-            InputStream inputStream = http.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line+"\n");
-            }
-            bufferedReader.close();
-            String stringOfGames = stringBuilder.toString();
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            Gson gson = gsonBuilder.setPrettyPrinting().create();
-            gameDetails = gson.fromJson(stringOfGames, GameDetails[].class);
-            populatePlayerNames();
-//            String jsonOutput = gson.toJson(gameDetails);
-//            System.out.println(jsonOutput);
-//            System.out.println(Main.gameDetails.getId());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        changeScene("MainScreen", "main_screen.fxml");
+       changeScene("MainScreen", "main_screen.fxml");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        getGameDetails();
 
     }
 
@@ -143,54 +96,5 @@ public class PreGame implements Initializable {
         tblPlayerList.getColumns().addAll(colPlayerName);
         gamesObservableList = FXCollections.observableArrayList(gameDetails);
         tblPlayerList.setItems(gamesObservableList);
-    }
-
-    private void getGameDetails(){
-        URL url = null;
-        try {
-            url = new URL("http://localhost:8080/gamedetails/game/" + Main.game.getId());
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-        }
-        URLConnection con = null;
-        try {
-            con = url.openConnection();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        HttpURLConnection http = (HttpURLConnection)con;
-        try {
-            http.setRequestMethod("GET"); // PUT is another valid option
-        } catch (ProtocolException e1) {
-            e1.printStackTrace();
-        }
-        http.setDoOutput(true);
-
-        http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        try {
-            http.connect();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        try {
-            InputStream inputStream = http.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line+"\n");
-            }
-            bufferedReader.close();
-            String stringOfGames = stringBuilder.toString();
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            Gson gson = gsonBuilder.setPrettyPrinting().create();
-            gameDetails = gson.fromJson(stringOfGames, GameDetails[].class);
-            populatePlayerNames();
-//            String jsonOutput = gson.toJson(gameDetails);
-//            System.out.println(jsonOutput);
-//            System.out.println(Main.gameDetails.getId());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

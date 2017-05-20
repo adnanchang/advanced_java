@@ -47,52 +47,7 @@ public class JoinGame implements Initializable {
     }
 
     @FXML private void txtJoinGameMouseClick() throws IOException {
-        Main.game = tblGameList.getSelectionModel().getSelectedItem();
-        Main.gameDetails = new GameDetails(txtPlayerName.getText(), "","PUT URL HERE", Main.game);
-//        List<GameDetails> gameDetailsList = Main.game.getGameDetails();
-//        gameDetailsList.add(gameDetails);
-//        Main.game.setGameDetails(gameDetailsList);
-        URL url = null;
-        try {
-            url = new URL("http://localhost:8080/gamedetails/create");
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-        }
-        URLConnection con = null;
-        try {
-            con = url.openConnection();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        HttpURLConnection http = (HttpURLConnection)con;
-        try {
-            http.setRequestMethod("POST"); // PUT is another valid option
-        } catch (ProtocolException e1) {
-            e1.printStackTrace();
-        }
-        http.setDoOutput(true);
-
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.setPrettyPrinting().create();
-        String jsonOutput = gson.toJson(Main.gameDetails);
-        byte[] out = jsonOutput.getBytes(StandardCharsets.UTF_8);
-        int length = out.length;
-
-        http.setFixedLengthStreamingMode(length); // THIS IS IMPORTANT. DOESN'T WORK WITHOUT THIS
-        http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        try {
-            http.connect();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        try(OutputStream os = http.getOutputStream()) {
-            os.write(out);
-            System.out.println(jsonOutput);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        changeScene("PreGame","pre_game.fxml");
+       changeScene("PreGame","pre_game.fxml");
     }
 
 

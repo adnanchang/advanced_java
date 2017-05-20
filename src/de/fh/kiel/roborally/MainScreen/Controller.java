@@ -72,7 +72,7 @@ public class Controller implements Initializable{
 
     }
 
-    private void changeScene(String path, String FXMLFile ) throws IOException {
+    public void changeScene(String path, String FXMLFile ) throws IOException {
         Stage stage = (Stage) txtCreateGame.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource(String.format("../%s/%s",path, FXMLFile)));
 
