@@ -42,9 +42,9 @@ public class CreateGame implements Initializable {
         byte[] out = (String.format(
                 "{" +
                         "\"name\" : \"%s\"," +
-                        "\"maxRobotCount\" : \"%d\"" +
-                        "}", gameName, comboMaxRobots.getValue())).getBytes(StandardCharsets.UTF_8);
-
+                        "\"maxRobotCount\" : \"%d\"," +
+                        "\"playerName\" : \"$s\"" +
+                        "}", gameName, comboMaxRobots.getValue(), txtPlayerName.getText())).getBytes(StandardCharsets.UTF_8);
         /**
          * Post Byte array to create a game
          */

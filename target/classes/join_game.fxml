@@ -55,7 +55,7 @@
                                <Font name="Gameplay Regular" size="17.0" />
                            </font>
                        </JFXTextField>
-                       <Text fx:id="txtJoinGame" fill="#ee0000" onMouseClicked="#txtJoinGameMouseClick" onMouseEntered="#txtJoinGameMouseEnter" onMouseExited="#txtJoinGameMouseExit" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Game" textOrigin="TOP">
+                       <Text fx:id="txtJoinGame" fill="#ee0000" onMouseClicked="#txtJoinGameMouseClick" onMouseEntered="#txtJoinGameMouseEnter" onMouseExited="#txtJoinGameMouseExit" stroke="#fffb00" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Game" textOrigin="TOP">
                            <font>
                                <Font name="Gameplay Regular" size="17.0" />
                            </font>
